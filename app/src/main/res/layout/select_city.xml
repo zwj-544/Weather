@@ -3,9 +3,38 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_height="@dimen/action_bar_height"
+        android:background="@color/actionbar_color"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/asusres_ic_ab_back_holo_light"
+            android:layout_marginLeft="@dimen/content_margin_left_right"
+            android:layout_centerVertical="true"
+            android:id="@+id/back_icon"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_city_hint"
+            android:layout_toRightOf="@+id/back_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/content_margin_left_right"
+            android:background="@null"
+            android:layout_marginLeft="@dimen/content_margin_icon"
+            android:textCursorDrawable="@null"
+            android:id="@+id/search_city"/>
+
+    </RelativeLayout>
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/select_city"/>
+        android:id="@+id/search_city_list"
+        android:visibility="gone"/>
+
 
 </LinearLayout>

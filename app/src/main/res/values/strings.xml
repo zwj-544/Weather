@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="select_city">选择城市</string>
+    <string name="search_city_hint">请输入城市</string>
 </resources>
