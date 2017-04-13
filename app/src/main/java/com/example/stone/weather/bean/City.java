@@ -1,9 +1,9 @@
-package bean;
+package com.example.stone.weather.bean;
 
 /**
  * Created by zwj on 2017/4/11.
  */
-public class city {
+public class City {
     /**
      * id : CN101010100
      * cityEn : beijing

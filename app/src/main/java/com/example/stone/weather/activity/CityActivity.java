@@ -1,6 +1,7 @@
-package com.example.stone.weather;
+package com.example.stone.weather.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,8 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.example.stone.weather.R;
+import com.example.stone.weather.bean.City;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import bean.city;
 
 /**
  * Created by czy on 17-4-11.
@@ -56,6 +58,7 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
         searchCity = (EditText) findViewById(R.id.search_city);
         searchCity.addTextChangedListener(this);
         searchCityList = (ListView) findViewById(R.id.search_city_list);
+        searchCityList.setOnItemClickListener(this);
         //locate = (TextView) findViewById(R.id.location);
         //locate.setOnClickListener(this);
         hotCity = (GridView) findViewById(R.id.hot_city);
@@ -74,9 +77,9 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
     }
 
     private void handleCities(String text) {
-        List<city> cities;
+        List<City> cities;
         Gson gson = new Gson();
-        cities = gson.fromJson(text,new TypeToken<List<city>>(){}.getType());
+        cities = gson.fromJson(text,new TypeToken<List<City>>(){}.getType());
         for(int i = 0; i<cities.size(); i++){
             cityList.add(cities.get(i).getCityZh());
         }
@@ -162,6 +165,9 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
                 String name=amapLocation.getCity().substring(0,amapLocation.getCity().length()-1);
                 Log.d("zwj:", "city===" + name);
                 mlocationClient.stopLocation();
+                Intent intent = new Intent(this, WeatherActivity.class);
+                intent.putExtra("city",name);
+                startActivity(intent);
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError","location Error, ErrCode:"
@@ -183,12 +189,17 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
                 mlocationClient.setLocationOption(mLocationOption);
                 mlocationClient.startLocation();
             }else {
-                searchCity.setText(getResources().getStringArray(R.array.hot_city)[position]);
+                //searchCity.setText(getResources().getStringArray(R.array.hot_city)[position]);
+                Intent intent = new Intent(this, WeatherActivity.class);
+                intent.putExtra("city", getResources().getStringArray(R.array.hot_city)[position]);
+                startActivity(intent);
             }
         }
         if(parent.getId() == R.id.search_city_list){
             String city = (String) ((TextView) view).getText();
-            Log.d("zwj","city=="+city);
+            Intent intent = new Intent(this, WeatherActivity.class);
+            intent.putExtra("city", city);
+            startActivity(intent);
         }
     }
 }

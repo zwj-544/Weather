@@ -3,5 +3,8 @@
     <dimen name="action_bar_height">40dp</dimen>
     <dimen name="content_margin_left_right">14dp</dimen>
     <dimen name="content_margin_icon">10dp</dimen>
+    <dimen name="icon_size">28dp</dimen>
+    <dimen name="temp">70sp</dimen>
+    <dimen name="summary">30sp</dimen>
 
 </resources>
