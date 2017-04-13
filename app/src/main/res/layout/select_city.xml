@@ -15,7 +15,7 @@
             android:layout_height="28dp"
             android:layout_marginLeft="@dimen/content_margin_left_right"
             android:layout_centerVertical="true"
-            android:src="@drawable/back"
+            android:src="@drawable/asusres_ic_ab_back_holo_light"
             android:id="@+id/back_icon"/>
         <EditText
             android:layout_width="match_parent"

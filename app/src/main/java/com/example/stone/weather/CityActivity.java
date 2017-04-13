@@ -186,5 +186,9 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
                 searchCity.setText(getResources().getStringArray(R.array.hot_city)[position]);
             }
         }
+        if(parent.getId() == R.id.search_city_list){
+            String city = (String) ((TextView) view).getText();
+            Log.d("zwj","city=="+city);
+        }
     }
 }
