@@ -1,6 +1,5 @@
 package com.example.stone.weather.utils;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,7 +7,6 @@ import android.util.Log;
 
 import com.example.stone.weather.bean.Weather;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
