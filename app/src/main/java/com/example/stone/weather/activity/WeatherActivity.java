@@ -16,6 +16,7 @@ import com.example.stone.weather.R;
 import com.example.stone.weather.utils.HttpUtils;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -62,6 +63,20 @@ public class WeatherActivity extends Activity{
                 startActivity(selectIntent);
             }
         });
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        cities = sharedPreferences.getStringSet("cities",null);
+        if(cities != null){
+            Iterator<String> i = cities.iterator();
+            if(i.hasNext()){
+                city = i.next();
+                Log.d("zwj","city=="+city);
+            }
+        }
         Intent intent = getIntent();
         if(intent != null){
             Log.d("zwj","intent1="+intent.getStringExtra("city"));
@@ -72,6 +87,7 @@ public class WeatherActivity extends Activity{
         }
 
         if(city != null){
+            nowCity.setText(city);
             String url = "https://free-api.heweather.com/v5/weather?city="+city+"&key=a2b3fffe17c24c45905b78bbd8c85df5";
             try {
                 HttpUtils.run(url,handler);
@@ -79,22 +95,11 @@ public class WeatherActivity extends Activity{
                 e.printStackTrace();
             }
         }
-
-        nowCity.setText(city);
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-        cities = sharedPreferences.getStringSet("cities",null);
-        /*if(cities != null){
-            Iterator<String> i = cities.iterator();
-            if(i.hasNext()){
-                city = i.next();
-                Log.d("zwj","city=="+city);
-            }
-        }*/
-
-
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 }
