@@ -53,7 +53,8 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
     private GridView hotCity;
     private TextView quickSelect;
     SharedPreferences sharedPreferences;
-    Set<String> cities;
+    private int cityNum;
+    private List<String> weatherList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +72,11 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
         hotCity.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.hot_city)));
         hotCity.setOnItemClickListener(this);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        cities = sharedPreferences.getStringSet("cities",null);
-        if(cities == null){
-            cities = new HashSet<String >();
+        cityNum = sharedPreferences.getInt("num",0);
+        if(cityNum != 0){
+            for(int i = 1; i <= cityNum; i++){
+                weatherList.add(sharedPreferences.getString(i+"",null));
+            }
         }
     }
     
@@ -174,8 +177,13 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
                 df.format(date);//定位时间
                 amapLocation.getCity();
                 String name=amapLocation.getCity().substring(0,amapLocation.getCity().length()-1);
-                cities.add(name);
-                sharedPreferences.edit().putStringSet("cities",cities).apply();
+                if(!weatherList.contains(name)){
+                    cityNum++;
+                    sharedPreferences.edit().putInt("num",cityNum).apply();
+                    sharedPreferences.edit().putString(cityNum+"",name).apply();
+                }
+                //cities.add(name);
+                //sharedPreferences.edit().putStringSet("cities",cities).apply();
                 Log.d("zwj:", "city===" + name);
                 mlocationClient.stopLocation();
                 Intent intent = new Intent(this, WeatherActivity.class);
@@ -204,8 +212,11 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
                 mlocationClient.startLocation();
             }else {
                 //searchCity.setText(getResources().getStringArray(R.array.hot_city)[position]);
-                cities.add(getResources().getStringArray(R.array.hot_city)[position]);
-                sharedPreferences.edit().putStringSet("cities",cities).apply();
+                if(!weatherList.contains(getResources().getStringArray(R.array.hot_city)[position])){
+                    cityNum++;
+                    sharedPreferences.edit().putInt("num",cityNum).apply();
+                    sharedPreferences.edit().putString(cityNum+"",getResources().getStringArray(R.array.hot_city)[position]).apply();
+                }
                 Intent intent = new Intent(this, WeatherActivity.class);
                 intent.putExtra("city", getResources().getStringArray(R.array.hot_city)[position]);
                 Log.d("zwj","put =="+getResources().getStringArray(R.array.hot_city)[position]);
@@ -215,8 +226,11 @@ public class CityActivity extends Activity implements TextWatcher, View.OnClickL
         }
         if(parent.getId() == R.id.search_city_list){
             String city = (String) ((TextView) view).getText();
-            cities.add(city);
-            sharedPreferences.edit().putStringSet("cities",cities).apply();
+            if(!weatherList.contains(city)){
+                cityNum++;
+                sharedPreferences.edit().putInt("num",cityNum).apply();
+                sharedPreferences.edit().putString(cityNum+"",city).apply();
+            }
             Intent intent = new Intent(this, WeatherActivity.class);
             intent.putExtra("city", city);
             startActivity(intent);

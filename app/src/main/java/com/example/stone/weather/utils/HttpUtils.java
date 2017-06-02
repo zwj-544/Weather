@@ -40,7 +40,7 @@ public class HttpUtils {
                 Weather weather;
                 Gson gson = new Gson();
                 weather = gson.fromJson(mJson, Weather.class);
-                Log.d("zwj","json=="+mJson);
+                //Log.d("zwj","json=="+mJson);
                 Message message = new Message();
                 message.what = 1;
                 Bundle b = new Bundle();

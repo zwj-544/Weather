@@ -43,6 +43,14 @@
 
         </activity>
 
+        <activity android:name=".activity.CityManagerActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+
         <meta-data android:name="com.amap.api.v2.apikey" android:value="383b2921231ba1c29cb7644d7958f673"/>
 
         <service android:name="com.amap.api.location.APSService"/>
